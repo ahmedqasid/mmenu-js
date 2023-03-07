@@ -370,7 +370,14 @@ const initSearch = function (
             //	Add data attribute to the matching listitems.
             listitems.forEach((listitem) => {
                 const text = DOM.children(listitem, '.mm-listitem__text')[0];
-                if (!text || DOM.text(text).toLowerCase().indexOf(query) > -1) {
+                let s = DOM.text(text);
+                if (text) {
+                    if (text.getAttribute("extraSearch"))
+                        s += " " + text.getAttribute("extraSearch");
+                    if (text.getAttribute("searchText"))
+                        s = text.getAttribute("searchText");
+                }
+                if (!text || s.toLowerCase().indexOf(query) > -1) {
                     listitem.dataset.mmSearchresult = query;
                 }
             });
